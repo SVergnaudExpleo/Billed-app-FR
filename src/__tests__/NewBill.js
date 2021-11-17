@@ -8,11 +8,12 @@ import firebasePost from "../__mocks__/firebasePost"
 describe("Given I am connected as an employee", () => {
 
   // connection comme employée //
-  beforeEach(()=>{Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+  beforeEach(()=>{
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock });
     window.localStorage.setItem('user', JSON.stringify({
       type: 'Employee'
-    }))}
-  );
+    }));
+  });
 
   describe("When I am on NewBill Page", () => {
     test("Then user set wrong file format, alert must be display", () => {
@@ -21,21 +22,22 @@ describe("Given I am connected as an employee", () => {
       const onNavigate = (pathname) => {
         null
       };
+      window.alert = jest.fn();
       const uiOk = screen.getByTestId("form-new-bill");
       expect(uiOk).toBeTruthy;
-      const firestore = null;
-      window.alert = jest.fn()
-
-      const newBillContainer = new NewBill({document,onNavigate,firestore,LocalStorage: null});
+      
+      const newBillContainer = new NewBill({document,onNavigate,firestore:null,LocalStorage: null});
       expect(newBillContainer).toBeTruthy;
+
       const file = screen.getByTestId("file");
       expect(file).toBeTruthy;
+
       fireEvent.change(file, {
         target: {
           files: [new File(['file content'],'mauvais-type.txt',{type: 'text/plain', name: 'mauvais-type.txt'})],
         }
-      })
-      expect(window.alert).toBeCalled()
+      });
+      expect(window.alert).toBeCalled();
     });
 
     test("Then user set the good file format, no alert must be display", () => {
@@ -44,18 +46,16 @@ describe("Given I am connected as an employee", () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       };
-/*       window.firebase.storage('storage', JSON.stringify({
-        value: 'toto',
-      })); */
-
       const uiOk = screen.getByTestId("form-new-bill");
       expect(uiOk).toBeTruthy;
       window.alert = jest.fn();
 
-      const newBillContainer = new NewBill({document,onNavigate,firestore: null,LocalStorage: window.localStorage});
+      const newBillContainer = new NewBill({document,onNavigate,firestore: null ,LocalStorage:window.localStorage });
       expect(newBillContainer).toBeTruthy;
+
       const file = screen.getByTestId("file");
       expect(file).toBeTruthy;
+
       fireEvent.change(file, {
         target: {
           files: [new File(['file content'],'bon-type.png',{type: 'image/png', name:'bon-type.png'})],

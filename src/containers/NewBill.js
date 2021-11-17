@@ -34,15 +34,18 @@ export default class NewBill {
       fileArea.value = ""
       alert("le type de fichier doit être ,.jpeg, .jpg, .png.\r\ Vous avez utilisé le fichier ci-dessous \r\ \r\ " + fileName)
     } else {
-      this.firestore
-      .storage
-      .ref(`justificatifs/${fileName}`)
-      .put(file)
-      .then(snapshot => snapshot.ref.getDownloadURL())
-      .then(url => {
-        this.fileUrl = url
-        this.fileName = fileName
-      })
+      this.firestore != undefined ?
+        this.firestore
+        .storage
+        .ref(`justificatifs/${fileName}`)
+        .put(file)
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then(url => {
+          this.fileUrl = url
+          this.fileName = fileName
+        }) 
+      : 
+        ""
     }
   }
   
