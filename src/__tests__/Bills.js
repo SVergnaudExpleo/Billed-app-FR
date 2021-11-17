@@ -4,14 +4,19 @@ import { bills } from "../fixtures/bills.js"
 import { localStorageMock } from "../__mocks__/localStorage.js"
 import Bills from "../containers/Bills"
 import firebase from "../__mocks__/firebase"
+import { ROUTES } from "../constants/routes.js"
+import {icon1HighLight} from "../app/Router"
 
 describe("Given I am connected as an employee", () => {
   // connection comme employée //
-  beforeEach(()=>{Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-    window.localStorage.setItem('user', JSON.stringify({
-      type: 'Employee'
-    }))}
-  );
+    beforeEach(()=>{
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }));
+    });
+  // ajouter le onNavigate pour déclencher le router
+
   describe("When I am on Bills Page", () => {
 
     test("Then bill icon in vertical layout should be highlighted", () => {
@@ -19,6 +24,7 @@ describe("Given I am connected as an employee", () => {
       document.body.innerHTML = html
       const icone = screen.getByTestId("icon-window")
       expect(icone).toBeTruthy()
+      icon1HighLight()
       expect(icone.className).toBe("active-icon")
     });
 
@@ -34,30 +40,30 @@ describe("Given I am connected as an employee", () => {
     test("Then user click on new bill button, buttton is called", ()=>{
       const onNavigate = (pathname) => {
         document.body.innerHTML = BillsUI({ data: bills })
-      }
-      const firestore = null
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      };
+      const billContainer = new Bills({document,onNavigate,firestore:null,LocalStorage: window.localStorage});
+      expect(billContainer).toBeTruthy;
 
-      const billContainer = new Bills({document,onNavigate,firestore,LocalStorage: window.localStorage})
-      expect(billContainer).toBeTruthy
-      const buttonNewbill = screen.getByTestId("btn-new-bill")
-      expect (buttonNewbill).toBeTruthy
-      buttonNewbill.click()
-      expect (buttonNewbill).toBeCalled
+      const buttonNewbill = screen.getByTestId("btn-new-bill");
+      expect (buttonNewbill).toBeTruthy;
+
+      buttonNewbill.click();
+      expect (buttonNewbill).toBeCalled;
     });
 
     test("Then user click on eyes button, button is called",()=>{
       const onNavigate = (pathname) => {
         document.body.innerHTML = BillsUI({ data: bills })
-      }
-      const firestore = null
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-      const billContainer = new Bills({document,onNavigate,firestore,LocalStorage: window.localStorage})
-      expect(billContainer).toBeTruthy
-      const buttonEye = screen.getAllByTestId("icon-eye")
-      expect (buttonEye).toBeTruthy
-      buttonEye[0].click()
-      expect(buttonEye).toBeCalled
+      };
+      $.fn.modal=jest.fn;
+      const billContainer = new Bills({document,onNavigate,firestore: null,LocalStorage: window.localStorage});
+      expect(billContainer).toBeTruthy;
+
+      const buttonEye = screen.getAllByTestId("icon-eye");
+      expect (buttonEye).toBeTruthy;
+
+      buttonEye[0].click();
+      expect(buttonEye).toBeCalled;
     });
   });
 

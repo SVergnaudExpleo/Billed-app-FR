@@ -9,6 +9,13 @@ import DashboardUI from "../views/DashboardUI.js"
 
 import { ROUTES, ROUTES_PATH } from "../constants/routes.js"
 
+export const icon1HighLight = ()=> {
+  const divIcon1 = document.getElementById('layout-icon1')
+  const divIcon2 = document.getElementById('layout-icon2')
+  divIcon1.classList.add('active-icon')
+  divIcon2.classList.remove('active-icon')
+}
+
 export default () => {
   const rootDiv = document.getElementById('root')
   rootDiv.innerHTML = ROUTES({ pathname: window.location.pathname })
@@ -26,21 +33,16 @@ export default () => {
       new Login({ document, localStorage, onNavigate, PREVIOUS_LOCATION, firestore })
     } else if (pathname === ROUTES_PATH['Bills']) {
       rootDiv.innerHTML = ROUTES({ pathname, loading: true })
-      const divIcon1 = document.getElementById('layout-icon1')
-      const divIcon2 = document.getElementById('layout-icon2')
-      divIcon1.classList.add('active-icon')
-      divIcon2.classList.remove('active-icon')
+      icon1HighLight()
       const bills = new Bills({ document, onNavigate, firestore, localStorage  })
       bills.getBills().then(data => {
         rootDiv.innerHTML = BillsUI({ data })
-        const divIcon1 = document.getElementById('layout-icon1')
-        const divIcon2 = document.getElementById('layout-icon2')
-        divIcon1.classList.add('active-icon')
-        divIcon2.classList.remove('active-icon')
+        icon1HighLight()
         new Bills({ document, onNavigate, firestore, localStorage })
       }).catch(error => {
         rootDiv.innerHTML = ROUTES({ pathname, error })
       })
+      
     } else if (pathname === ROUTES_PATH['NewBill']) {
       rootDiv.innerHTML = ROUTES({ pathname, loading: true })
       new NewBill({ document, onNavigate, firestore, localStorage })

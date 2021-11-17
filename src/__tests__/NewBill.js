@@ -24,7 +24,6 @@ describe("Given I am connected as an employee", () => {
       const uiOk = screen.getByTestId("form-new-bill");
       expect(uiOk).toBeTruthy;
       const firestore = null;
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock });
       window.alert = jest.fn()
 
       const newBillContainer = new NewBill({document,onNavigate,firestore,LocalStorage: null});
@@ -45,22 +44,15 @@ describe("Given I am connected as an employee", () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       };
-      Object.defineProperty(window, 'firebase', { value: localStorageMock })
-      window.firebase.storage('storage', JSON.stringify({
+/*       window.firebase.storage('storage', JSON.stringify({
         value: 'toto',
-      }));
+      })); */
 
-      class Firestore {
-        constructor() {
-          this.store = window.firebase ? window.firebase.firestore() : () => null
-          this.storage = window.firebase ? window.firebase.storage() : () => null
-        }
-      };
       const uiOk = screen.getByTestId("form-new-bill");
       expect(uiOk).toBeTruthy;
       window.alert = jest.fn();
 
-      const newBillContainer = new NewBill({document,onNavigate,firestore: Firestore,LocalStorage: window.localStorage});
+      const newBillContainer = new NewBill({document,onNavigate,firestore: null,LocalStorage: window.localStorage});
       expect(newBillContainer).toBeTruthy;
       const file = screen.getByTestId("file");
       expect(file).toBeTruthy;
