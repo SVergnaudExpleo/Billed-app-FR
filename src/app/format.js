@@ -7,7 +7,7 @@ export const formatDate = (dateStr) => {
     const month = mo.charAt(0).toUpperCase() + mo.slice(1)
     return `${parseInt(da)} ${month.substr(0,3)}. ${ye.toString().substr(2,4)}`
   }else{
-    return "invalid date"
+    return "No date"
   }
 }
 

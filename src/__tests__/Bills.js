@@ -4,7 +4,6 @@ import { bills } from "../fixtures/bills.js"
 import { localStorageMock } from "../__mocks__/localStorage.js"
 import Bills from "../containers/Bills"
 import firebase from "../__mocks__/firebase"
-import { ROUTES } from "../constants/routes.js"
 import {icon1HighLight} from "../app/Router"
 
 describe("Given I am connected as an employee", () => {
@@ -15,7 +14,6 @@ describe("Given I am connected as an employee", () => {
         type: 'Employee'
       }));
     });
-  // ajouter le onNavigate pour déclencher le router
 
   describe("When I am on Bills Page", () => {
 

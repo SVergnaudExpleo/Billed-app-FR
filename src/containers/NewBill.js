@@ -15,10 +15,10 @@ export default class NewBill {
     this.fileName = null
     new Logout({ document, localStorage, onNavigate })
   }
+
   handleChangeFile = e => {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
-    //const fileName = filePath[filePath.length-1]
     
     const fileName = file.name
     const tableAutorizedFile = [".jpeg", ".jpg", ".png"]
