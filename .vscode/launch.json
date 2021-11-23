@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Moz",
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "url": "http://localhost:5500",
+            "webRoot": "${workspaceFolder}"
+        },
+        
+        {
             "name": "Launch Chrome",
             "request": "launch",
             "type": "pwa-chrome",

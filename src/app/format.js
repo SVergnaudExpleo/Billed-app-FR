@@ -1,5 +1,6 @@
 export const formatDate = (dateStr) => {
-  if (dateStr !== "") {
+  const splitTest = dateStr.split("-")
+  if (dateStr !== "" && splitTest[0].length === 4 && splitTest[1].length === 2 && splitTest[2].length === 2) {
     const date = new Date(dateStr)
     const ye = new Intl.DateTimeFormat('fr', { year: 'numeric' }).format(date)
     const mo = new Intl.DateTimeFormat('fr', { month: 'short' }).format(date)
